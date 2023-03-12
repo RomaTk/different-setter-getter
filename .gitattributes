@@ -1,0 +1,15 @@
+yarnrc.lock filter= diff= merge= text eol=lf
+
+*.html text eol=lf
+*.ts text eol=lf
+*.js text eol=lf
+*.json text eol=lf
+*.yml text eol=lf
+*.md text eol=lf
+
+.eslintignore text eol=lf
+.gitattributes text eol=lf
+.gitignore text eol=lf
+.prettierignore text eol=lf
+.prettierrc text eol=lf
+.yarnrc text eol=lf

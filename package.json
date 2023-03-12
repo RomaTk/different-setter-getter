@@ -1,0 +1,54 @@
+{
+  "name": "@romatk/data-store",
+  "version": "1.0.0",
+  "description": "Provides class to create object with in and out interface and process functions to follow that with strong typisation",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RomaTk/data-store.git"
+  },
+  "files": [
+    "lib"
+  ],
+  "author": "RomaTk <rt.craz@gmail.com>",
+  "license": "MIT",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com",
+    "access": "public"
+  },
+  "scripts": {
+    "start": "webpack serve --mode development",
+    "lint": "eslint --ext .js --ext .ts --ignore-path .eslintignore . --fix",
+    "build": "tsc"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.36.2",
+    "@typescript-eslint/parser": "^5.36.2",
+    "eslint": "^8.23.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-import-resolver-typescript": "^3.5.0",
+    "eslint-plugin-import": "^2.25.4",
+    "eslint-plugin-prettier": "^4.0.0",
+    "html-webpack-plugin": "^5.5.0",
+    "prettier": "^2.5.1",
+    "ts-loader": "^9.4.2",
+    "typescript": "^4.9.4",
+    "webpack": "^5.74.0",
+    "webpack-cli": "^4.9.1",
+    "webpack-dev-server": "^4.10.1"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
