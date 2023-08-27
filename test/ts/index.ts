@@ -103,6 +103,7 @@ tester([
             realResult += String(dataStore.getData('b'))
             dataStore.setData('b', 'fd')
             realResult += String(dataStore.getData('b'))
+
             return new Promise((resolve, reject) => {
                 if (shouldBeResult === realResult) {
                     resolve('true')
@@ -136,6 +137,7 @@ tester([
             realResult += String(dataStore.getData('b'))
             dataStore.setData('b', { realValue: 'fd' })
             realResult += String(dataStore.getData('b'))
+
             return new Promise((resolve, reject) => {
                 if (shouldBeResult === realResult) {
                     resolve('true')
@@ -187,6 +189,7 @@ tester([
             realResult += dataStore.getData('b')
             dataStore.setData('b', { realValue: 'oi' })
             realResult += dataStore.getData('b')
+
             return new Promise((resolve, reject) => {
                 if (shouldBeResult === realResult) {
                     resolve('true')
@@ -231,6 +234,7 @@ tester([
                                 if (value.y) {
                                     object.y = value.y
                                 }
+
                                 return object
                             }
                         },
@@ -247,6 +251,7 @@ tester([
             if (scale.x === 2 && scale.y === 1 && name === 'el') {
                 result = true
             }
+
             return new Promise((resolve, reject) => {
                 if (result) {
                     resolve('true')

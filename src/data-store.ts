@@ -15,14 +15,17 @@ export default class DataStore<StoreOut extends {}, StoreIn extends {} = {}> {
         this.savedData = defaultValues
         this.preprocessingFunctions = preprocessingFunctions
     }
+
     public getProcessingFunctionsObj<KEY extends keyof ProcessingFunctions<StoreOut, StoreIn, DataStore<StoreOut, StoreIn>>>(
         key: KEY
     ): ProcessingFunctions<StoreOut, StoreIn, DataStore<StoreOut, StoreIn>>[KEY] | undefined {
         if (key in this.preprocessingFunctions) {
             return this.preprocessingFunctions[key]
         }
+
         return undefined
     }
+
     public setProcessingFunctionsObj<
         KEY extends keyof StoreOut & keyof ProcessingFunctions<StoreOut, StoreIn, DataStore<StoreOut, StoreIn>>,
         VALUE extends KEY extends keyof StoreIn & keyof StoreOut
@@ -73,6 +76,7 @@ export default class DataStore<StoreOut extends {}, StoreIn extends {} = {}> {
                       SetFunction<KEY & keyof StoreOut, StoreOut, StoreIn, DataStore<StoreOut, StoreIn>> | undefined
                   >
         }
+
         return undefined as TYPE extends 'get'
             ? GetFunction<KEY & keyof StoreOut, StoreOut, DataStore<StoreOut, StoreIn>> | undefined
             : IfAlsways<
@@ -83,6 +87,7 @@ export default class DataStore<StoreOut extends {}, StoreIn extends {} = {}> {
                   SetFunction<KEY & keyof StoreOut, StoreOut, StoreIn, DataStore<StoreOut, StoreIn>> | undefined
               >
     }
+
     public setData<
         KEY extends keyof StoreOut & keyof ProcessingFunctions<StoreOut, StoreIn, DataStore<StoreOut, StoreIn>>,
         DATA extends KEY extends keyof StoreIn ? StoreIn[KEY] : StoreOut[KEY]
@@ -104,6 +109,7 @@ export default class DataStore<StoreOut extends {}, StoreIn extends {} = {}> {
             this.savedData[key] = data as StoreOut[KEY]
         }
     }
+
     public getData<KEY extends keyof StoreOut & keyof ProcessingFunctions<StoreOut, StoreIn, DataStore<StoreOut, StoreIn>>>(key: KEY) {
         if (key in this.preprocessingFunctions) {
             const keyDefType = key
@@ -112,6 +118,7 @@ export default class DataStore<StoreOut extends {}, StoreIn extends {} = {}> {
                 return get(keyDefType, this.savedData[keyDefType], this)
             }
         }
+
         return this.savedData[key]
     }
 }
