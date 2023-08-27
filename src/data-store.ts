@@ -9,8 +9,8 @@ import {
 } from './constants/interfaces'
 
 export default class DataStore<StoreOut extends {}, StoreIn extends {} = {}> {
-    protected savedData: StoreOut
-    protected preprocessingFunctions: ProcessingFunctions<StoreOut, StoreIn, DataStore<StoreOut, StoreIn>>
+    private savedData: StoreOut
+    private preprocessingFunctions: ProcessingFunctions<StoreOut, StoreIn, DataStore<StoreOut, StoreIn>>
     constructor(defaultValues: StoreOut, preprocessingFunctions: ProcessingFunctions<StoreOut, StoreIn, DataStore<StoreOut, StoreIn>>) {
         this.savedData = defaultValues
         this.preprocessingFunctions = preprocessingFunctions
