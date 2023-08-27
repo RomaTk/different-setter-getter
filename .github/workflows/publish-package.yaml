@@ -23,10 +23,3 @@ jobs:
             - run: yarn publish
               env:
                   NODE_AUTH_TOKEN: ${{secrets.MY_PUBISH_PACKAGE_TOKEN}}
-            - uses: actions/setup-node@v2
-              with:
-                  node-version: 16
-                  registry-url: https://registry.npmjs.org
-            - run: yarn publish
-              env:
-                  NODE_AUTH_TOKEN: ${{secrets.MY_PUBISH_PACKAGE_TOKEN_NPM}}
