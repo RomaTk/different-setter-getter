@@ -1,6 +1,9 @@
-# DataStore
+# DataStore (different getter and setter)
 
-This lib provides class to create **object with in and out interface and process functions** to follow that with **strong typisation**
+This lib is to make object with **different getter and setters**.
+For example, you would like to set scale as just number, but in result you always have scale defined as `{x: number, y: number}`. This is not easy to do in **typescript**. But easy if use this lib.
+
+With **strong typing** in this lib controlles when preprocessing function should be seted to convert setter to getter, when not. So this util is good to use in many cases to avoid additional checking process in project to follow **strong typing**.
 
 Base example to show main functionality (lib has more functionality, look the API):
 
