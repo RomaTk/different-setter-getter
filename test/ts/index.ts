@@ -10,7 +10,7 @@ import tester from './tester'
         { a: 1, b: 'ac' },
         {
             b: {
-                set: (name, prop) => {
+                set: () => {
                     return '1'
                 },
             },
@@ -51,7 +51,7 @@ import tester from './tester'
         {
             //@ts-expect-error
             b: {
-                get: (name, prop) => {
+                get: () => {
                     return '1'
                 },
             },
@@ -67,7 +67,7 @@ import tester from './tester'
                 },
             },
             b: {
-                set: (name, prop) => {
+                set: () => {
                     return '1'
                 },
             },
@@ -82,7 +82,7 @@ import tester from './tester'
                 },
             },
             b: {
-                set: (name, prop) => {
+                set: () => {
                     return '1'
                 },
             },

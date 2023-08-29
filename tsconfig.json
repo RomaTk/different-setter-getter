@@ -11,5 +11,5 @@
         "skipLibCheck": true
     },
     "include": ["src"],
-    "exclude": ["node_modules", "test", ".vscode", ".github"]
+    "exclude": ["node_modules", "test", ".vscode", ".github", "utils"]
 }
