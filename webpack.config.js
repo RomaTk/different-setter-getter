@@ -2,7 +2,7 @@ const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 console.log(__dirname)
-module.exports = (env) => {
+module.exports = () => {
     let folderPath = 'test'
 
     const urlIndexts = `${folderPath}/ts/index.ts`
