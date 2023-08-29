@@ -1,12 +1,12 @@
 {
-  "name": "@romatk/data-store",
+  "name": "@romatk/different-setter-getter",
   "version": "2.0.2",
-  "description": "Provides class to create object with in and out interface and process functions to follow that with strong typisation",
+  "description": "This lib is to make object with different getter and setters with following strong typing.",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/RomaTk/data-store.git"
+    "url": "git+https://github.com/RomaTk/different-setter-getter.git"
   },
   "files": [
     "lib"

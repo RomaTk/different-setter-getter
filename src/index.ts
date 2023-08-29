@@ -1,2 +1,2 @@
 export * as CONSTANTS from './constants'
-export { default as DataStore } from './data-store'
+export { default as DiffSetGet } from './diff-set-get'

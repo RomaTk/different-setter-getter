@@ -1,14 +1,14 @@
-# DataStore (different getter and setter)
+# different-setter-getter
 
 This lib is to make object with **different getter and setters**.
-For example, you would like to set scale as just number, but in result you always have scale defined as `{x: number, y: number}`. This is not easy to do in **typescript**. But easy if use this lib.
+For example, you would like to set scale as just number, but in result you always have scale defined as `{x: number, y: number}`. This is not easy to do in **typescript**, so this lib resolves this problem.
 
-With **strong typing** in this lib controlles when preprocessing function should be seted to convert setter to getter, when not. So this util is good to use in many cases to avoid additional checking process in project to follow **strong typing**.
+With **strong typing** in this lib controlles when preprocessing function should be setted to convert setter to type in getter, when not. So this util is good to use in many cases to avoid additional checking process in project to follow **strong typing**.
 
 Base example to show main functionality (lib has more functionality, look the API):
 
 ```typescript
-const dataStore = new DataStore<
+const dataobj = new DiffSetGet<
     { scale: { x: number; y: number }; id: string; name: string },
     {
         scale:
@@ -29,11 +29,11 @@ const dataStore = new DataStore<
     },
     {
         scale: {
-            set: (key, value, thisDataStore) => {
+            set: (key, value, thisDataobj) => {
                 if (typeof value === 'number') {
                     return { x: value, y: value }
                 } else {
-                    const object = thisDataStore.getData('scale')
+                    const object = thisDataobj.getData('scale')
                     if (value.x) {
                         object.x = value.x
                     }
@@ -49,9 +49,9 @@ const dataStore = new DataStore<
         },
     }
 )
-dataStore.setData('scale', { x: 2 })
-const scale = dataStore.getData('scale') //will return {x: 2, y: 1}
-const name = dataStore.getData('name') //will return 'el'
+dataobj.setData('scale', { x: 2 })
+const scale = dataobj.getData('scale') //will return {x: 2, y: 1}
+const name = dataobj.getData('name') //will return 'el'
 ```
 
 ## Run Locally
@@ -90,10 +90,10 @@ Linter
 
 Here is simplified version of api, look `*.d.ts`
 
-#### create DataStore
+#### create some object
 
 ```typescript
-const dataStore = new DataStore<StoreOut, StoreIn>(initData, preprocessingFunctions)
+const dataobj = new DiffSetGet<StoreOut, StoreIn>(initData, preprocessingFunctions)
 ```
 
 | Name                     | Type description               | Description                                  |
@@ -108,7 +108,7 @@ const dataStore = new DataStore<StoreOut, StoreIn>(initData, preprocessingFuncti
 return data from store using **StoreOut** type
 
 ```typescript
-dataStore.getData('scale')
+dataobj.getData('scale')
 ```
 
 #### setData
@@ -116,7 +116,7 @@ dataStore.getData('scale')
 set data into store using **StoreIn** type
 
 ```typescript
-dataStore.setData('scale', { x: 2 })
+dataobj.setData('scale', { x: 2 })
 ```
 
 #### getProcessingFunctionsObj
@@ -124,7 +124,7 @@ dataStore.setData('scale', { x: 2 })
 return object with set and get preprocessing functions
 
 ```typescript
-dataStore.getProcessingFunctionsObj('scale')
+dataobj.getProcessingFunctionsObj('scale')
 ```
 
 #### setProcessingFunctionsObj
@@ -132,7 +132,7 @@ dataStore.getProcessingFunctionsObj('scale')
 setting object with set and get preprocessing functions
 
 ```typescript
-dataStore.getProcessingFunctionsObj('scale'. {
+dataobj.getProcessingFunctionsObj('scale'. {
     set: ()=>{
         return '{x:1, y:1}'
     }
@@ -147,8 +147,8 @@ dataStore.getProcessingFunctionsObj('scale'. {
 setting object with set and get preprocessing functions
 
 ```typescript
-dataStore.getProcessingFunction('scale', 'set')
-dataStore.getProcessingFunction('scale', 'get')
+dataobj.getProcessingFunction('scale', 'set')
+dataobj.getProcessingFunction('scale', 'get')
 ```
 
 ## Authors
