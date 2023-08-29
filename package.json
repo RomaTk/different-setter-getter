@@ -1,6 +1,6 @@
 {
   "name": "@romatk/data-store",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "Provides class to create object with in and out interface and process functions to follow that with strong typisation",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
