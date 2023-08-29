@@ -1,16 +1,16 @@
-import { DataStore } from '../../src'
+import { DiffSetGet } from '../../src'
 import tester from './tester'
 
 //JUST FOR CHECKING TYPISATION
 ;() => {
-    new DataStore<{ a: number; b: string }>({ a: 1, b: 'ac' }, {})
+    new DiffSetGet<{ a: number; b: string }>({ a: 1, b: 'ac' }, {})
     //@ts-expect-error
-    new DataStore<{ a: number; b: string }, { b: number }>({ a: 1, b: 'ac' }, {})
-    const dataobj = new DataStore<{ a: number; b: string }, { b: number }>(
+    new DiffSetGet<{ a: number; b: string }, { b: number }>({ a: 1, b: 'ac' }, {})
+    const dataobj = new DiffSetGet<{ a: number; b: string }, { b: number }>(
         { a: 1, b: 'ac' },
         {
             b: {
-                set: (name, prop) => {
+                set: () => {
                     return '1'
                 },
             },
@@ -46,18 +46,18 @@ import tester from './tester'
     dataobj.setProcessingFunctionsObj('a', {})
     // @ts-expect-error
     dataobj.setProcessingFunctionsObj('b', {})
-    new DataStore<{ a: number; b: string }, { b: number }>(
+    new DiffSetGet<{ a: number; b: string }, { b: number }>(
         { a: 1, b: 'ac' },
         {
             //@ts-expect-error
             b: {
-                get: (name, prop) => {
+                get: () => {
                     return '1'
                 },
             },
         }
     )
-    new DataStore<{ a: number; b: string }, { b: number | string }>(
+    new DiffSetGet<{ a: number; b: string }, { b: number | string }>(
         { a: 1, b: 'ac' },
         {
             a: {
@@ -67,13 +67,13 @@ import tester from './tester'
                 },
             },
             b: {
-                set: (name, prop) => {
+                set: () => {
                     return '1'
                 },
             },
         }
     )
-    new DataStore<{ a: number; b: string }, { b: number | string }>(
+    new DiffSetGet<{ a: number; b: string }, { b: number | string }>(
         { a: 1, b: 'ac' },
         {
             a: {
@@ -82,7 +82,7 @@ import tester from './tester'
                 },
             },
             b: {
-                set: (name, prop) => {
+                set: () => {
                     return '1'
                 },
             },
@@ -96,13 +96,14 @@ tester([
         func: () => {
             const shouldBeResult = '110acfd'
             let realResult = ''
-            const dataStore = new DataStore<{ a: number; b: string }>({ a: 1, b: 'ac' }, {})
-            realResult += String(dataStore.getData('a'))
-            dataStore.setData('a', 10)
-            realResult += String(dataStore.getData('a'))
-            realResult += String(dataStore.getData('b'))
-            dataStore.setData('b', 'fd')
-            realResult += String(dataStore.getData('b'))
+            const dataobj = new DiffSetGet<{ a: number; b: string }>({ a: 1, b: 'ac' }, {})
+            realResult += String(dataobj.getData('a'))
+            dataobj.setData('a', 10)
+            realResult += String(dataobj.getData('a'))
+            realResult += String(dataobj.getData('b'))
+            dataobj.setData('b', 'fd')
+            realResult += String(dataobj.getData('b'))
+
             return new Promise((resolve, reject) => {
                 if (shouldBeResult === realResult) {
                     resolve('true')
@@ -117,7 +118,7 @@ tester([
         func: () => {
             const shouldBeResult = '110acafda'
             let realResult = ''
-            const dataStore = new DataStore<{ a: number; b: string }, { b: { realValue: string } }>(
+            const dataobj = new DiffSetGet<{ a: number; b: string }, { b: { realValue: string } }>(
                 { a: 1, b: 'ac' },
                 {
                     b: {
@@ -130,12 +131,13 @@ tester([
                     },
                 }
             )
-            realResult += String(dataStore.getData('a'))
-            dataStore.setData('a', 10)
-            realResult += String(dataStore.getData('a'))
-            realResult += String(dataStore.getData('b'))
-            dataStore.setData('b', { realValue: 'fd' })
-            realResult += String(dataStore.getData('b'))
+            realResult += String(dataobj.getData('a'))
+            dataobj.setData('a', 10)
+            realResult += String(dataobj.getData('a'))
+            realResult += String(dataobj.getData('b'))
+            dataobj.setData('b', { realValue: 'fd' })
+            realResult += String(dataobj.getData('b'))
+
             return new Promise((resolve, reject) => {
                 if (shouldBeResult === realResult) {
                     resolve('true')
@@ -150,7 +152,7 @@ tester([
         func: () => {
             const shouldBeResult = '1377acaacaoika'
             let realResult = ''
-            const dataStore = new DataStore<{ a: number; b: string }, { b: { realValue: string } }>(
+            const dataobj = new DiffSetGet<{ a: number; b: string }, { b: { realValue: string } }>(
                 { a: 1, b: 'ac' },
                 {
                     b: {
@@ -163,30 +165,31 @@ tester([
                     },
                 }
             )
-            realResult += dataStore.getData('a')
-            dataStore.setProcessingFunctionsObj('a', {
+            realResult += dataobj.getData('a')
+            dataobj.setProcessingFunctionsObj('a', {
                 get: (name, prop) => {
                     return prop + 2
                 },
-                set: dataStore.getProcessingFunction('a', 'set'),
+                set: dataobj.getProcessingFunction('a', 'set'),
             })
 
-            realResult += dataStore.getData('a')
-            dataStore.setData('a', 5)
-            realResult += dataStore.getData('a')
-            dataStore.setProcessingFunctionsObj('a', dataStore.getProcessingFunctionsObj('a'))
-            realResult += dataStore.getData('a')
-            realResult += dataStore.getData('b')
-            const wasSetFunc = dataStore.getProcessingFunction('b', 'set')
-            dataStore.setProcessingFunctionsObj('b', {
-                get: dataStore.getProcessingFunction('b', 'get'),
-                set: (name, prop, thisDataStore) => {
-                    return wasSetFunc(name, prop, thisDataStore) + 'k'
+            realResult += dataobj.getData('a')
+            dataobj.setData('a', 5)
+            realResult += dataobj.getData('a')
+            dataobj.setProcessingFunctionsObj('a', dataobj.getProcessingFunctionsObj('a'))
+            realResult += dataobj.getData('a')
+            realResult += dataobj.getData('b')
+            const wasSetFunc = dataobj.getProcessingFunction('b', 'set')
+            dataobj.setProcessingFunctionsObj('b', {
+                get: dataobj.getProcessingFunction('b', 'get'),
+                set: (name, prop, thisdataobj) => {
+                    return wasSetFunc(name, prop, thisdataobj) + 'k'
                 },
             })
-            realResult += dataStore.getData('b')
-            dataStore.setData('b', { realValue: 'oi' })
-            realResult += dataStore.getData('b')
+            realResult += dataobj.getData('b')
+            dataobj.setData('b', { realValue: 'oi' })
+            realResult += dataobj.getData('b')
+
             return new Promise((resolve, reject) => {
                 if (shouldBeResult === realResult) {
                     resolve('true')
@@ -199,7 +202,7 @@ tester([
     {
         name: 'Example',
         func: () => {
-            const dataStore = new DataStore<
+            const dataobj = new DiffSetGet<
                 { scale: { x: number; y: number }; id: string; name: string },
                 {
                     scale:
@@ -220,17 +223,18 @@ tester([
                 },
                 {
                     scale: {
-                        set: (key, value, thisDataStore) => {
+                        set: (key, value, thisDataobj) => {
                             if (typeof value === 'number') {
                                 return { x: value, y: value }
                             } else {
-                                const object = thisDataStore.getData('scale')
+                                const object = thisDataobj.getData('scale')
                                 if (value.x) {
                                     object.x = value.x
                                 }
                                 if (value.y) {
                                     object.y = value.y
                                 }
+
                                 return object
                             }
                         },
@@ -240,13 +244,14 @@ tester([
                     },
                 }
             )
-            dataStore.setData('scale', { x: 2 })
-            const scale = dataStore.getData('scale')
-            const name = dataStore.getData('name')
+            dataobj.setData('scale', { x: 2 })
+            const scale = dataobj.getData('scale')
+            const name = dataobj.getData('name')
             let result = false
             if (scale.x === 2 && scale.y === 1 && name === 'el') {
                 result = true
             }
+
             return new Promise((resolve, reject) => {
                 if (result) {
                     resolve('true')

@@ -6,7 +6,7 @@ on:
     workflow_dispatch:
 
 jobs:
-    publish-gpr:
+    publish-package:
         runs-on: ubuntu-latest
         permissions:
             contents: read
@@ -20,6 +20,16 @@ jobs:
                   scope: '@romatk'
             - run: yarn install
             - run: yarn run build
+            - run: node utils/change-registry.js --registry https://npm.pkg.github.com/
             - run: yarn publish
               env:
                   NODE_AUTH_TOKEN: ${{secrets.MY_PUBISH_PACKAGE_TOKEN}}
+            - uses: actions/setup-node@v2
+              with:
+                  node-version: 16
+                  registry-url: https://registry.npmjs.org
+                  scope: '@romatk'
+            - run: node utils/change-registry.js --registry https://registry.npmjs.org
+            - run: yarn publish
+              env:
+                  NODE_AUTH_TOKEN: ${{secrets.MY_PUBISH_PACKAGE_TOKEN_NPM}}

@@ -1,4 +1,4 @@
-import DataStore from '../../data-store'
+import DataStore from '../../diff-set-get'
 
 export type RequireAtLeastOne<T, Keys extends keyof T = keyof T> = Pick<T, Exclude<keyof T, Keys>> &
     {

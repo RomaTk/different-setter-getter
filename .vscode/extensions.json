@@ -3,6 +3,7 @@
         "pkief.material-icon-theme",
         "esbenp.prettier-vscode",
         "gruntfuggly.todo-tree",
-        "eamodio.gitlens"
+        "eamodio.gitlens",
+        "dbaeumer.vscode-eslint"
     ]
 }
